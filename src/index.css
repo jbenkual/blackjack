@@ -1,0 +1,48 @@
+#playArea {
+	background-color: #36A118;
+	width: 100%;
+	height: 80%;
+	border-radius: 500px;
+	border-color: brown;
+	border-width: 5px;
+	border-style: solid;
+}
+
+h1 {
+	color: royalblue;
+	margin-left: 40%;
+}
+
+h3 {
+	margin-left: 40%;
+}
+
+table {
+	border-spacing: 10px;
+	margin-left: 30%;
+}
+
+tr {
+}
+
+td {
+	
+	width: 64px;
+	height: 89px;
+	
+}
+
+.card {
+	border-radius: 10px;
+	border: 1px solid black;
+	background-color: white;
+}
+
+
+.flip {
+	-webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}

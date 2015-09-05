@@ -60,8 +60,128 @@
 	
 	var _cardJs2 = _interopRequireDefault(_cardJs);
 	
-	var AoS = new _cardJs2["default"]("S", "A");
-	console.log(AoS.toString());
+	__webpack_require__(/*! ./index.css */ 4);
+	
+	var cardVals = ['A', 'A', "A", 'A'];
+	var cardSuits = ['S', 'H', "D", "C"];
+	var deck = [];
+	var usedDeck = [];
+	
+	var myHand = [];
+	var dealerHand = [];
+	
+	var hands = {
+		"p1": myHand,
+		"p2": dealerHand
+	};
+	
+	var aces = {
+		"p1": 0,
+		"p2": 0
+	};
+	
+	for (var i = 2; i < 11; i++) {
+		cardVals.push(i.toString());
+	}
+	
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+	
+	try {
+		for (var _iterator = cardSuits[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var s = _step.value;
+			var _iteratorNormalCompletion2 = true;
+			var _didIteratorError2 = false;
+			var _iteratorError2 = undefined;
+	
+			try {
+				for (var _iterator2 = cardVals[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+					var i = _step2.value;
+	
+					deck.push(new _cardJs2["default"](s, i));
+				}
+			} catch (err) {
+				_didIteratorError2 = true;
+				_iteratorError2 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+						_iterator2["return"]();
+					}
+				} finally {
+					if (_didIteratorError2) {
+						throw _iteratorError2;
+					}
+				}
+			}
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator["return"]) {
+				_iterator["return"]();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+	
+	var printDeck = function printDeck(d) {
+		return console.log(d.reduce(function (a, b) {
+			return a.toString() + "," + b.toString();
+		}));
+	};
+	var getVal = function getVal(arr) {
+		return arr.reduce(function (a, b) {
+			return a + b.getPoints(a);
+		}, 0);
+	};
+	var drawCard = function drawCard(deck, hand) {
+		return hand.push(deck.pop());
+	};
+	var discardHand = function discardHand(deck, hand) {
+		return deck.push.apply(deck, hand);
+	};
+	
+	deck = _lodash2["default"].shuffle(deck);
+	
+	printDeck(deck);
+	
+	var bust = function bust(player) {
+		return console.log(player + " busts!");
+	};
+	
+	var calculate = function calculate(player) {
+		var total = getVal(hands[player]);
+		if (total <= 11 && total + aces[player] + 10 <= 21) {
+			total += 11;
+		}
+		return total;
+	};
+	
+	var hit = function hit(player) {
+		var x = drawCard(deck, hands[player]);
+		if (hands[player][x - 1].val === 'A') {
+			aces[player]++;
+		}
+		if (calculate(player) > 21) {
+			bust(player);
+		}
+	};
+	
+	var hitOrNot = function hitOrNot(player) {
+		return calculate(player) <= 16 + aces[player] > 0;
+	};
+	
+	hit("p1");
+	hit("p1");
+	printDeck(myHand);
+	console.log(calculate("p1"));
 
 /***/ },
 /* 1 */
@@ -12451,6 +12571,7 @@
 /***/ function(module, exports) {
 
 	/*jshint esnext: true */
+	
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -12461,18 +12582,39 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	Array.prototype.contains = function (obj) {
+		var i = this.length;
+		while (i--) {
+			if (this[i] === obj) {
+				return true;
+			}
+		}
+		return false;
+	};
+	
 	var Card = (function () {
-		function Card(suit, value) {
+		function Card(suit, val) {
 			_classCallCheck(this, Card);
 	
 			this.suit = suit;
-			this.value = value;
+			this.val = val;
 		}
 	
 		_createClass(Card, [{
 			key: "toString",
 			value: function toString() {
-				return this.suit + this.value;
+				return this.suit + this.val;
+			}
+		}, {
+			key: "getPoints",
+			value: function getPoints(total) {
+				if (this.val === "A") {
+					return 1;
+				} else if (["Q", "J", "K"].contains(this.val)) {
+					return 10;
+				} else {
+					return parseInt(this.val);
+				}
 			}
 		}]);
 	
@@ -12481,6 +12623,339 @@
 	
 	exports["default"] = Card;
 	module.exports = exports["default"];
+
+/***/ },
+/* 4 */
+/*!***********************!*\
+  !*** ./src/index.css ***!
+  \***********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./index.css */ 5);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 5 */
+/*!**************************************!*\
+  !*** ./~/css-loader!./src/index.css ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 6)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "#playArea {\n\tbackground-color: #36A118;\n\twidth: 100%;\n\theight: 80%;\n\tborder-radius: 500px;\n\tborder-color: brown;\n\tborder-width: 5px;\n\tborder-style: solid;\n}\n\nh1 {\n\tcolor: royalblue;\n\tmargin-left: 40%;\n}\n\nh3 {\n\tmargin-left: 40%;\n}\n\ntable {\n\tborder-spacing: 10px;\n\tmargin-left: 30%;\n}\n\ntr {\n}\n\ntd {\n\t\n\twidth: 64px;\n\theight: 89px;\n\t\n}\n\n.card {\n\tborder-radius: 10px;\n\tborder: 1px solid black;\n\tbackground-color: white;\n}\n\n\n.flip {\n\t-webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    transform: rotate(180deg);\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 6 */
+/*!**************************************!*\
+  !*** ./~/css-loader/lib/css-base.js ***!
+  \**************************************/
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 7 */
+/*!*************************************!*\
+  !*** ./~/style-loader/addStyles.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0;
+	
+	module.exports = function(list, options) {
+		if(true) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function createStyleElement() {
+		var styleElement = document.createElement("style");
+		var head = getHeadElement();
+		styleElement.type = "text/css";
+		head.appendChild(styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement() {
+		var linkElement = document.createElement("link");
+		var head = getHeadElement();
+		linkElement.rel = "stylesheet";
+		head.appendChild(linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement());
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement();
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement();
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ }
 /******/ ]);
