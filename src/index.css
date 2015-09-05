@@ -20,22 +20,55 @@ h3 {
 table {
 	border-spacing: 10px;
 	margin-left: 30%;
+
 }
 
 tr {
 }
 
 td {
-	
 	width: 64px;
 	height: 89px;
-	
 }
 
 .card {
 	border-radius: 10px;
 	border: 1px solid black;
 	background-color: white;
+}
+
+.topSuit {
+	margin-top: -2px;
+	margin-left: 2px;
+}
+
+.topVal {
+	margin-top: 0px;
+	margin-left: 2px;
+}
+
+.midSuit {
+	font-size: 200%;
+	float: right;
+	margin-right: 21px;
+	margin-top: -10px;
+}
+
+.botSuit {
+	margin-top: 20px;
+	margin-right: 2px;
+}
+.botVal {
+	margin-top: 0px;
+	margin-right: 2px;
+}
+
+.black {
+	color: black;
+}
+
+.red {
+	color: red;
 }
 
 
