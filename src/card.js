@@ -10,6 +10,8 @@ Array.prototype.contains = function(obj) {
     return false;
 };
 
+
+
 export default class Card {
 	constructor(suit, val) {
 		this.suit = suit;

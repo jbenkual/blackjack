@@ -59,7 +59,9 @@ let hit = (player) => {
 	}
 	if(calculate(player) > 21) {
 		bust(player);
+		return true;
 	}
+	return false;
 };
 
 let hitOrNot = (player) => calculate(player) <= 16 + aces[player] > 0 ;
@@ -69,7 +71,42 @@ hit("p1");
 printDeck(myHand);
 console.log(calculate("p1"));
 
+let hold = () => {
+	while(hitOrNot("p2")) {
+		if(hit("p2")) {
+			return;
+		}
+	}
+	if(calculate("p1") > calculate("p2")) {
+		console.log("p1 wins!");
+	}
+	else {
+		console.log("Dealer Wins :(");
+	}
+};
+/*
+let cardHTML = () => {
+	let h = document.getElementById("playerRow");
+	let td = document.createElement("TD");
+	let td = document.createElement("TD");
 
+};
+*/
+
+var myClass = function (data) {
+
+	this.data = data;
+	this.changeData = function (newData) {
+		this.data = newData;
+	}
+}
+
+myClass.prototype.print = function () {
+	console.log(this.data);
+}
+
+var aClass = new myClass("hello");
+aClass.print(); // "hello"
 
 
 
