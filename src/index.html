@@ -7,19 +7,12 @@
 
 	<body>
 		<h1>Blackjack</h1>
+		<div class="everything">
 		<div id="playArea">
 			<h3>Dealer</h3>
 			<table id="hand">
 				<tbody>
 					<tr id= "dealerRow">
-						<td class="card">
-							<div class="topVal">A</div>
-							<div class="topSuit">&spades;</div>
-							<div class="midSuit">&spades;</div>
-							<div class="botSuit flip">&spades;</div>
-							<div class="botVal flip">A</div>
-						</td>
-						<td class="card"></td>
 					</tr>
 					<tr id= "spacerRow">
 						<td class=""></td>
@@ -30,11 +23,12 @@
 			</table>
 			<h3>Player</h3>
 		</div>
-		<div class="actionList">
-			<a href="#" class="button button-green">Hit</a>
-			<a href="#" class="button button-red">Hold</a>
-			<a href="#" class="button">Deal</a>
 		</div>
-
+		<div class="actionList">
+			<div id="hitB" class="button button-green">Hit</div>
+			<div id="holdB" class="button button-red">Hold</div>
+			<div class="button" id="dealB">Deal</div>
+		</div>
+	
 	</body>
 </html>

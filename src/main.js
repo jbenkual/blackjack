@@ -5,17 +5,20 @@ import _ from "lodash";
 
 import Card from "./card.js";
 
+let htmlSuits = {
+	S: '&spades;',
+	H: '&hearts;',
+	D: '&diams;',
+	C: '&clubs;'
+};
 let cardVals = ['A','A',"A",'A'];
 let cardSuits = ['S','H',"D","C"];
 let deck = [];
 let usedDeck = [];
 
-let myHand = [];
-let dealerHand = [];
-
 let hands = {
-	"p1": myHand,
-	"p2": dealerHand
+	"p1": [],
+	"p2": []
 };
 
 let aces = {
@@ -35,8 +38,12 @@ for(let s of cardSuits) {
 
 let printDeck = (d) => console.log(d.reduce((a,b) => a.toString() + "," + b.toString()));
 let getVal = (arr) => arr.reduce((a,b) => a + b.getPoints(a), 0);
-let drawCard = (deck, hand) => hand.push(deck.pop());
 let discardHand = (deck, hand) => deck.push.apply(deck, hand);
+let drawCard = (deck, player) => {
+	var c = deck.pop();
+	hands[player].push(c);
+	return createCard(c, player);
+};
 
 deck = _.shuffle(deck);
 
@@ -46,17 +53,15 @@ let bust = (player) => console.log(player + " busts!");
 
 let calculate = (player) => {
 	let total = getVal(hands[player]);
-	if(total <= 11 && total + aces[player] +10 <= 21 ) {
-		total += 11;
+	if(total <= 11 && aces[player] > 0 && total +10 <= 21 ) {
+		total += 10;
 	}
 	return total;
 };
 
 let hit = (player) => {
-	let x = drawCard(deck, hands[player]);
-	if(hands[player][x-1].val === 'A') {
-		aces[player]++;
-	}
+	let c = drawCard(deck, player);
+	aces[player] += (c.val === 'A');
 	if(calculate(player) > 21) {
 		bust(player);
 		return true;
@@ -64,15 +69,11 @@ let hit = (player) => {
 	return false;
 };
 
-let hitOrNot = (player) => calculate(player) <= 16 + aces[player] > 0 ;
-
-hit("p1");
-hit("p1");
-printDeck(myHand);
-console.log(calculate("p1"));
+let hitOrNot = () => calculate("p2") <= 16 + aces.p2 > 0;
 
 let hold = () => {
-	while(hitOrNot("p2")) {
+	console.log("hold!");
+	while(hitOrNot()) {
 		if(hit("p2")) {
 			return;
 		}
@@ -84,30 +85,61 @@ let hold = () => {
 		console.log("Dealer Wins :(");
 	}
 };
-/*
-let cardHTML = () => {
-	let h = document.getElementById("playerRow");
-	let td = document.createElement("TD");
-	let td = document.createElement("TD");
 
+let createDiv = (css, html) => {
+	let elem = document.createElement("DIV");
+	elem.className = css;
+	elem.innerHTML = html;
+	return elem;
 };
-*/
 
-var myClass = function (data) {
-
-	this.data = data;
-	this.changeData = function (newData) {
-		this.data = newData;
+let createCard = (card, player) => {
+	console.log("create card");
+	console.log("C" + card);
+	let val = card.val;
+	let suit = card.suit;
+	var color = "";
+	if(suit === 'H' || suit === 'D') {
+		color = " red";
 	}
-}
+	let tr = "";
+	if (player == "p1") {
+		tr = document.getElementById("playerRow");
+	}
+	else {
+		tr = document.getElementById("dealerRow");
+	}
+	let td = document.createElement("TD");
+	td.className = "card";
 
-myClass.prototype.print = function () {
-	console.log(this.data);
-}
+	td.appendChild(createDiv("topVal" + color, val));
+	td.appendChild(createDiv("topSuit" + color, htmlSuits[suit]));
+	td.appendChild(createDiv("midSuit" + color, htmlSuits[suit]));
+	td.appendChild(createDiv("botSuit flip" + color, htmlSuits[suit]));	
+	td.appendChild(createDiv("botVal flip" + color, val));
+	tr.appendChild(td);
 
-var aClass = new myClass("hello");
-aClass.print(); // "hello"
+	return card;
+};
 
+let deal = () => {
+	document.getElementById("playerRow").innerHTML = "";
+	document.getElementById("dealerRow").innerHTML = "";
+	hands.p1 = [];
+	hands.p2 = [];
+	console.log("deal!");
+	hit("p1");
+	hit("p1");
+	hit("p2");
+};
 
+window.onload = function() {
+	let dbutton = document.getElementById("dealB");
+	dbutton.onclick = deal;
+	let hitB = document.getElementById("hitB");
+	//hitB.onclick = hit("p1");
+	let holdB = document.getElementById("holdB");
+	holdB.onclick = hold;
+};
 
 
