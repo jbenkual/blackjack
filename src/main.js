@@ -69,6 +69,9 @@ let calculate = (player) => {
 };
 
 let hit = (player) => {
+	if(!buttonActive.hit) {
+		return;
+	}
 	let c = drawCard(deck, player);
 	aces[player] += (c.val === 'A');
 	var score = calculate(player);
@@ -91,6 +94,9 @@ let hitClick = (e) => hit("p1");
 let hitOrNot = () => calculate("p2") <= 16 + soft;
 
 let hold = () => {
+	if(!buttonActive.hold) {
+		return;
+	}
 	if (hitOrNot()) {
 		if (hit("p2")) {
 			return;
@@ -143,6 +149,7 @@ let createCard = (card, player) => {
 };
 
 let victory = (player) => {
+	console.log("v = " + player);
 	let v = document.getElementById("victoryMessage");
 	if(player === "p1") {
 		v.innerHTML = "You win!";
@@ -162,6 +169,9 @@ let victory = (player) => {
 };
 
 let deal = () => {
+	if(!buttonActive.deal) {
+		return;
+	}
 	dom.pRow.innerHTML = "";
 	dom.dRow.innerHTML = "";
 	dom.victoryMessage.innerHTML = "";
@@ -187,12 +197,12 @@ let deal = () => {
 	let t2 = calculate("p2");
 
 	if (t1 === 21 || t2 === 21) {
-		if (t2 === t1) {
+		if (t1 === t2) {
+			victory("draw");
+		} else if (t1 === 21) {
 			victory("p1");
-		} else if (t2 == 21) {
-			victory("p2");
 		} else {
-			victory();
+			victory("t2");
 		}
 	}
 };

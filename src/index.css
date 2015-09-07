@@ -38,6 +38,10 @@ td {
 	background-color: white;
 }
 
+.back {
+  background-image: url("./back.png");
+}
+
 .topSuit {
 	margin-top: -4px;
 	margin-left: 2px;
@@ -90,7 +94,7 @@ td {
 
 .actionList {
 	 margin: auto;
-	 width: 50%;
+	 width: 40%;
 	 margin-top: 20px;
 }
 
@@ -234,6 +238,6 @@ div#score1 {
 .disabled:hover,
 .disabled:active,
 .disabled:before {
-  background-color: darkgray;
+  background-color: rgba(150,150,150,0.5);
   background-image: -webkit-linear-gradient(top, #lightgray, #darkgray);
 }
