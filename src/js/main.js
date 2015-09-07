@@ -1,10 +1,9 @@
 /*jshint esnext: true */
-require("url-loader?mimetype=image/png!../img/back.png");
+//require("url-loader?mimetype=image/png!../img/back.png");
+require("url-loader?mimetype=image/jpg!../img/back2.jpg");
 require('../css/index.css');
 
-
 import _ from "lodash";
-
 import Card from "./card.js";
 
 let htmlSuits = {
@@ -85,8 +84,6 @@ let hit = (player) => {
 	aces[player] += (c.val === 'A');
 	var score = calculate(player);
 	dom['score' + player[1]].innerHTML = "Score: " + score;
-	console.log(player + " score: " +score);
-	console.log(hands[player]);
 	if(score > 21) {
 		bust(player);
 		return true;
