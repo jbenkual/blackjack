@@ -1,84 +1,85 @@
 #playArea {
-	background-color: #36A118;
-	width: 80%;
-	height: 80%;
+  background-color: #36A118;
+  width: 80%;
+  height: 80%;
   margin-left: 10%;
-	border-radius: 500px;
-	border-color: brown;
-	border-width: 5px;
-	border-style: solid;
+  border-radius: 500px;
+  border-color: brown;
+  border-width: 5px;
+  border-style: solid;
 }
 
 h1 {
-	color: royalblue;
-	text-align: center;
+  color: royalblue;
+  text-align: center;
 }
 
 h3 {
-	color: black;
-	text-align: center;
+  color: black;
+  text-align: center;
 }
 
 table {
-	border-spacing: 10px;
-	margin-left: 20%;
+  border-spacing: 10px;
+  margin-left: 20%;
 }
 
 tr {
 }
 
 td {
-	width: 64px;
-	height: 89px;
+  width: 64px;
+  height: 89px;
 }
 
 .card {
-	border-radius: 10px;
-	border: 1px solid black;
-	background-color: white;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: white;
 }
 
 .back {
-  background-image: url("./back.png");
+  background: url("../img/back.png");
+  background-size: cover;
 }
 
 .topSuit {
-	margin-top: -4px;
-	margin-left: 2px;
+  margin-top: -4px;
+  margin-left: 2px;
 }
 
 .topVal {
-	margin-top: 0px;
-	margin-left: 2px;
+  margin-top: 0px;
+  margin-left: 2px;
 }
 
 .midSuit {
-	font-size: 200%;
-	float: right;
-	margin-right: 21px;
-	margin-top: -10px;
+  font-size: 200%;
+  float: right;
+  margin-right: 21px;
+  margin-top: -10px;
 }
 
 .botSuit {
-	margin-top: 22px;
-	margin-right: 2px;
+  margin-top: 22px;
+  margin-right: 2px;
 }
 .botVal {
-	margin-top: -4px;
-	margin-right: 2px;
+  margin-top: -4px;
+  margin-right: 2px;
 }
 
 .black {
-	color: black;
+  color: black;
 }
 
 .red {
-	color: red;
+  color: red;
 }
 
 
 .flip {
-	-webkit-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
@@ -93,9 +94,9 @@ td {
 }
 
 .actionList {
-	 margin: auto;
-	 width: 40%;
-	 margin-top: 20px;
+   margin: auto;
+   width: 40%;
+   margin-top: 20px;
 }
 
 div#score2 {

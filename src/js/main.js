@@ -1,5 +1,7 @@
 /*jshint esnext: true */
-require('./index.css');
+require("url-loader?mimetype=image/png!../img/back.png");
+require('../css/index.css');
+
 
 import _ from "lodash";
 

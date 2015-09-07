@@ -1,9 +1,10 @@
 module.exports = {
 	watch: true,
 	development: true,
-	entry: "./src/main.js",
+	entry: "./src/js/main.js",
 	output: {
-		filename: "./src/bundle.js"
+		filename: "./js/bundle.js",
+		path: "./src"
 	},
 	module: {
 		loaders: [{
@@ -15,6 +16,11 @@ module.exports = {
 			test: /\.css/,
 			exclude: /node_modules/,
 			loader: "style-loader!css-loader"
+		},
+		{ 
+			test: /\.(png|jpg|jpeg|gif|woff)$/,
+			exclude: /node_modules/,
+			loader: 'url-loader?limit=8192' 
 		}]
 	}
 };
