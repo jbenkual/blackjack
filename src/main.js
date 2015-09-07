@@ -14,7 +14,7 @@ let htmlSuits = {
 
 let dom = {};
 
-let cardVals = ['A', 'A', "A", 'A'];
+let cardVals = ['A', 'K', "Q", 'J'];
 let cardSuits = ['S', 'H', "D", "C"];
 let deck = [];
 let usedDeck = [];
@@ -60,6 +60,7 @@ let bust = (player) => victory(Object.keys(hands)[2-player[1]]);
 
 let calculate = (player) => {
 	let total = getVal(hands[player]);
+	soft = false;
 	if (total <= 11 && aces[player] > 0 && total + 10 <= 21) {
 		total += 10;
 		soft = (player === 'p2');
