@@ -9,24 +9,27 @@
 		<h1>Blackjack</h1>
 		<div class="everything">
 		<div id="playArea">
-			<h3>Dealer</h3>
+			<h3 id="name2">Dealer</h3>
+			<div id="score2" class="hidden">Score:</div>
 			<table id="hand">
 				<tbody>
 					<tr id= "dealerRow">
 					</tr>
 					<tr id= "spacerRow">
-						<td class=""></td>
+						<td class="spacer"></td>
+						<div class="victory" id="victoryMessage"></div>
 					</tr>
 					<tr id= "playerRow">
 					</tr>
 				</tbody>
 			</table>
-			<h3>Player</h3>
+			<div id="score1" class="hidden">Score:</div>
+			<h3 id="name1">Player</h3>
 		</div>
 		</div>
 		<div class="actionList">
-			<div id="hitB" class="button button-green">Hit</div>
-			<div id="holdB" class="button button-red">Hold</div>
+			<div id="hitB" class="button button-green disabled">Hit</div>
+			<div id="holdB" class="button button-red disabled">Hold</div>
 			<div class="button" id="dealB">Deal</div>
 		</div>
 	

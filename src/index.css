@@ -21,7 +21,7 @@ h3 {
 
 table {
 	border-spacing: 10px;
-	margin-left: 30%;
+	margin-left: 20%;
 }
 
 tr {
@@ -80,10 +80,42 @@ td {
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+
+.victory {
+  display:inline-block;
+   vertical-align: top; 
+  font-size: 150%;
+  color: white;
+}
+
 .actionList {
 	 margin: auto;
 	 width: 50%;
 	 margin-top: 20px;
+}
+
+div#score2 {
+    float: left;
+    font-size: 150%;
+    margin-top: 7%;
+    margin-left: 10%;
+    width: 20%;
+    color: #FFE42A;
+    text-shadow: 1px 0px 2px black;
+}
+
+div#score1 {
+    float: left;
+    font-size: 150%;
+    margin-top: -12%;
+    margin-left: 10%;
+    width: 20%;
+    color: #FFE42A;
+    text-shadow: 1px 0px 2px black;
+}
+
+.hidden {
+  display: none;
 }
 
 
@@ -109,7 +141,7 @@ td {
   min-width: 96px;
   line-height: 46px;
   padding: 0 24px;
-  font-size: 14px;
+  font-size: 160%;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -196,4 +228,12 @@ td {
   background: #b61a15;
   border-color: #5b0d0b #72100d #9f1713;
   background-image: -webkit-linear-gradient(top, #921511, #e4201b);
+}
+
+.disabled,
+.disabled:hover,
+.disabled:active,
+.disabled:before {
+  background-color: darkgray;
+  background-image: -webkit-linear-gradient(top, #lightgray, #darkgray);
 }
