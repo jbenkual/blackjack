@@ -87,8 +87,8 @@ td {
 }
 
 .victory {
-  display:inline-block;
-   vertical-align: top; 
+  vertical-align: top; 
+  text-align: center;
   font-size: 150%;
   color: white;
 }
@@ -99,26 +99,31 @@ td {
    margin-top: 20px;
 }
 
-div#score2 {
-    float: left;
-    font-size: 150%;
-    margin-top: 7%;
-    margin-left: 10%;
-    width: 20%;
-    color: #FFE42A;
-    text-shadow: 1px 0px 2px black;
+.iblock {
+  display: inline-block;
 }
 
-div#score1 {
-    float: left;
-    font-size: 150%;
-    margin-top: -12%;
-    margin-left: 10%;
-    width: 20%;
-    color: #FFE42A;
-    text-shadow: 1px 0px 2px black;
+.score {  
+  font-size: 200%;
+  width: 150px;
+  height: 50px;
+  float: left;
+  color: #FFE42A;
+  text-shadow: 1px 0px 2px black;
 }
 
+#score1 {
+  
+  margin-top: -57%;
+  margin-left: 50%;
+  
+}
+
+#score2 { 
+  margin-bottom: -200%;
+  margin-top: 32%;
+  margin-left: 50%;
+}
 .hidden {
   display: none;
 }

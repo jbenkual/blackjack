@@ -37,15 +37,19 @@ let aces = {
 	"p2": 0
 };
 
-for (let i = 2; i < 11; i++) {
-	cardVals.push(i.toString());
-}
 
-for (let s of cardSuits) {
-	for (let i of cardVals) {
-		deck.push(new Card(s, i));
+let init = () => {
+	for (let i = 2; i < 11; i++) {
+		cardVals.push(i.toString());
 	}
-}
+
+	for (let s of cardSuits) {
+		for (let i of cardVals) {
+			deck.push(new Card(s, i));
+		}
+	}
+	deck = _.shuffle(deck);
+};
 
 let printDeck = (d) => console.log(d.reduce((a, b) => a.toString() + "," + b.toString()));
 let getVal = (arr) => arr.reduce((a, b) => a + b.getPoints(a), 0);
@@ -56,7 +60,10 @@ let drawCard = (deck, player) => {
 	return createCard(c, player);
 };
 
-deck = _.shuffle(deck);
+let reshuffle = () => {
+	deck = usedDeck.splice(0);
+	deck = _.shuffle(deck);
+};
 
 let bust = (player) => victory(Object.keys(hands)[2-player[1]]);
 
@@ -180,9 +187,12 @@ let deal = () => {
 	dom.dealB.className += " disabled";
 	dom.hitB.className = dom.hitB.className.replace(/ disabled/g, "");
 	dom.holdB.className = dom.holdB.className.replace(/ disabled/g, "");
-	dom.score1.className = "";
-	dom.score2.className = "";
+	dom.score1.className = "score";
+	dom.score2.className = "score";
 
+	deck.push.apply(deck, hands.p1);
+	deck.push.apply(deck, hands.p2);
+	_.shuffle(deck);
 	hands.p1 = [];
 	hands.p2 = [];
 	aces.p1 = 0;
@@ -210,6 +220,7 @@ let deal = () => {
 };
 
 window.onload = function() {
+	init();
 	dom.dealB = document.getElementById("dealB");
 	dom.dealB.onclick = deal;
 	dom.hitB = document.getElementById("hitB");
