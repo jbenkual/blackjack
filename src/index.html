@@ -2,6 +2,8 @@
 
 <html>
 	<head>
+		<title>Black Jack</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="./js/bundle.js"></script>
 	</head>
 
@@ -11,7 +13,7 @@
 			<div id="playArea">
 				<h3 id="name2">Dealer</h3>
 				<div class="iblock"><div id="score2" class="score hidden">Score:</div></div>
-				<div class="iblock"><div class="card back deck"></div></div>
+				<div class="iblock" id="deckParent"><div id="deck" class="card back deck depthBorder"></div></div>
 				<table id="hand">
 					<tbody>
 						<tr id= "dealerRow">
