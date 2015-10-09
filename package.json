@@ -1,12 +1,12 @@
 {
-  "name": "learnwebpack",
+  "name": "blackjack",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a web app that lets you play Black Jack agaisnt an AI dealer",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Joseph Benkual",
   "license": "ISC",
   "dependencies": {
     "babel-core": "^5.8.23",
@@ -17,5 +17,18 @@
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbenkual/blackjack.git"
+  },
+  "keywords": [
+    "blackjack",
+    "card",
+    "game"
+  ],
+  "bugs": {
+    "url": "https://github.com/jbenkual/blackjack/issues"
+  },
+  "homepage": "https://github.com/jbenkual/blackjack#readme"
 }
