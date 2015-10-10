@@ -1,6 +1,6 @@
 # BlackJack game using js es6
 
-This is a web app that lets you play Black Jack agaisnt an AI dealer [check it out!](jbenkual.github.io/blackjack)
+This is a web app that lets you play Black Jack agaisnt an AI dealer [check it out!](http://jbenkual.github.io/blackjack)
 
 This mobile-friendly and responsive app was written with just javascript, html and css, no external libraries are used.
 
