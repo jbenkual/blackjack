@@ -67,7 +67,7 @@ td.spacer {
     background-color: red;
     position:fixed;
     left:80%;
-    margin-top: 8%;
+    margin-top: 142px;
     margin-left:-32px; /*half the width*/
     
     z-index: 100;
@@ -146,18 +146,18 @@ td.spacer {
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes slideDown {
-    0%   { background-color: red; left:80%; top:0%;}
-    25%  { left:60%; top:32.5%;}
-    50%  { left:40%; top:32.5%;}
-    75%  { left:20%; top:32.5%;}
-    100% { left:10%; top:32.5%;}
+    0%   { background-color: red; left:80%; top:20%;}
+    25%  { left:60%; top:20.5%;}
+    50%  { left:40%; top:20.5%;}
+    75%  { left:20%; top:20.5%;}
+    100% { left:10%; top:20.5%;}
 }
 @-webkit-keyframes slideUp {
     0%   { background-color: red; left:80%; top:5%;}
-    25%  { left:60%; top:8.5%;}
-    50%  { left:40%; top:8.5%;}
-    75%  { left:20%; top:8.5%;}
-    100% { left:10%; top:8.5%;}
+    25%  { left:60%; top:1.5%;}
+    50%  { left:40%; top:1.5%;}
+    75%  { left:20%; top:1.5%;}
+    100% { left:10%; top:1.5%;}
 }
 
 
@@ -173,12 +173,12 @@ td.spacer {
   position: absolute;
   vertical-align: top; 
   text-align: center;
-  font-size: 150%;
+  font-size: 280%;
   color: white;
   text-shadow: 1px 1px black;
   float:left;
-  padding-top: 180px;
-  padding-left: 340px;
+  padding-top: 158px;
+  padding-left: 300px;
 }
 
 .actionList {
@@ -214,9 +214,54 @@ td.spacer {
 .hidden {
   display: none;
 }
-@media (max-width: 600px) {
-  .deck {
+@media (max-width: 650px) {
+/*  .deck {
     margin-top: 30%;
+  }*/
+  table {
+    margin-left: 15%;
+  }
+  .victory {
+    padding-left: 100px
+  }
+  h3 {
+    margin-left: 90px;
+  }
+  .score {
+    padding-left: 225px;
+  }
+}
+@media (max-width: 450px) {
+  #playArea {
+    margin-left: 4%;
+    width: 90%;
+  }
+  h1 {
+    display: none;
+  }
+  .midSuit{
+    display: none;
+  }
+  table {
+    margin-top: 56px;
+    margin-left: 10%;
+  }
+  .victory {
+    padding-left: 50px
+  }
+  h3 {
+    margin-left: 100px;
+  }
+  .score {
+    padding-top: 35px;
+    padding-left: 100px;
+  }
+  #score1 {
+    padding-left: 90px;
+    padding-top: 295px
+  }
+  td.spacer {
+    height: 20px;
   }
 }
 /*
