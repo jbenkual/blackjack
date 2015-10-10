@@ -117,6 +117,8 @@ let hold = () => {
 	if(!buttonActive.hold) {
 		return;
 	}
+	dom.hitB.className += " disabled";
+	dom.holdB.className += " disabled";
 	if (hitOrNot()) {
 		if (hit("p2")) {
 			return;
