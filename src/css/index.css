@@ -146,18 +146,18 @@ td.spacer {
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes slideDown {
-    0%   { background-color: red; left:80%; top:20%;}
-    25%  { left:60%; top:27.5%;}
-    50%  { left:40%; top:27.5%;}
-    75%  { left:20%; top:27.5%;}
-    100% { left:10%; top:27.5%;}
+    0%   { background-color: red; left:80%; top:100px;}
+    25%  { left:60%; top:180px;}
+    50%  { left:40%; top:180px;}
+    75%  { left:20%; top:180px;}
+    100% { left:10%; top:180px;}
 }
 @-webkit-keyframes slideUp {
-    0%   { background-color: red; left:80%; top:5%;}
-    25%  { left:60%; top:1.5%;}
-    50%  { left:40%; top:1.5%;}
-    75%  { left:20%; top:1.5%;}
-    100% { left:10%; top:1.5%;}
+    0%   { background-color: red; left:80%; top:40px;}
+    25%  { left:60%; top:12px;}
+    50%  { left:40%; top:12px;}
+    75%  { left:20%; top:12px;}
+    100% { left:10%; top:12px;}
 }
 
 
@@ -379,12 +379,14 @@ td.spacer {
     display: none;
   }
   table {
+    border-spacing: 0px;
     margin-top: 56px;
     margin-left: 0%;
   }
   .victory {
-    padding-top: 153px;
-    padding-left: 50px
+    padding-top: 160px;
+    padding-left: 35px;
+    font-size: 200%;
   }
   h3 {
     margin-left: 100px;
@@ -406,21 +408,21 @@ td.spacer {
      margin-top: 10px;
   }
   .button {
-    padding: 0 8px;
+    padding: 0 0px;
   }
 
   @-webkit-keyframes slideDown {
     0%   { background-color: red; left:80%; top:5%;}
-    25%  { left:60%; top:12.5%;}
-    50%  { left:40%; top:12.5%;}
-    75%  { left:20%; top:12.5%;}
-    100% { left:10%; top:12.5%;}
+    25%  { left:60%; top:80px;}
+    50%  { left:40%; top:80px;}
+    75%  { left:20%; top:80px;}
+    100% { left:10%; top:80px;}
 }
 @-webkit-keyframes slideUp {
-    0%   { background-color: red; left:80%; top:-5%;}
-    25%  { left:60%; top:-7.5%;}
-    50%  { left:40%; top:-7.5%;}
-    75%  { left:20%; top:-7.5%;}
-    100% { left:10%; top:-7.5%;}
+    0%   { background-color: red; left:80%; top:-20px;}
+    25%  { left:60%; top:-40px;}
+    50%  { left:40%; top:-40px;}
+    75%  { left:20%; top:-40px;}
+    100% { left:10%; top:-40px;}
 }
 }
