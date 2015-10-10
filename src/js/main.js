@@ -14,6 +14,7 @@ let htmlSuits = {
 };
 
 let dom = {}; // Store DOM Elements
+let score = {"p1": 0, "p2": 0};
 
 let cardVals = ['A', 'K', "Q", 'J'];
 let cardSuits = ['S', 'H', "D", "C"];
@@ -69,8 +70,10 @@ let drawCard = (deck, player) => {
 };
 
 let reshuffle = () => {
+	console.log("reshuffle deck", deck.length, usedDeck.length);
 	deck.push.apply(deck, usedDeck.splice(0));
 	deck = _.shuffle(deck);
+	console.log("new deck length", deck.length);
 };
 
 let bust = (player) => victory(Object.keys(hands)[2-player[1]]);
@@ -130,17 +133,21 @@ let hold = () => {
 };
 
 let victory = (player) => {
-	console.log("v = " + player);
+	score[player]++;
 	let v = document.getElementById("victoryMessage");
 	if(player === "p1") {
+		dom.name1.innerHTML = "Player [" + score[player] + "]";
 		v.innerHTML = "You win!";
 	} 
 	else if(player === "p2") {
+		dom.name2.innerHTML = "Dealer [" + score[player] + "]";
 		v.innerHTML = "You lose!";
 	}
 	else {
 		v.innerHTML = "Its a draw!";
 	}
+
+
 	resetButtons();
 };
 
@@ -150,8 +157,9 @@ let deal = () => {
 	}
 	resetTable();
 
-	//usedDeck = hands.p1.slice(0);
-	//usedDeck = hands.p2.slice(0);
+	usedDeck.push.apply(usedDeck, hands.p1.slice(0));
+	usedDeck.push.apply(usedDeck, hands.p2.slice(0));
+	console.log(deck.length);
 	if(deck.length < 150) {
 		reshuffle();
 	}
@@ -220,7 +228,6 @@ let createCard = (card, player) => {
 	tr.appendChild(td);
 	td.className = "hidden";
 	setTimeout(() => {
-		console.log("test");
 		td.className = "card";
 	}, 700 - 64 * hands[player].length);
 
@@ -265,7 +272,7 @@ let deckClick = (player) => {
 	newDeck.className = "card back deck " + animation;
 	dom.deckParent.appendChild(newDeck);
 	setTimeout(function() {
-		newDeck.className = "hidden";
+		dom.deckParent.removeChild(newDeck)
 	}, 680 - 80 * slot);
 };
 
@@ -307,6 +314,8 @@ window.onload = function() {
 	dom.victoryMessage = document.getElementById("victoryMessage");
 	dom.score1 = document.getElementById("score1");
 	dom.score2 = document.getElementById("score2");
+	dom.name1 = document.getElementById("name1");
+	dom.name2 = document.getElementById("name2");
 
 
 	dom.deckParent = document.getElementById("deckParent");
