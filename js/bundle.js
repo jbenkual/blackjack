@@ -69,6 +69,7 @@
 	};
 
 	var dom = {}; // Store DOM Elements
+	var score = { "p1": 0, "p2": 0 };
 
 	var cardVals = ['A', 'K', "Q", 'J'];
 	var cardSuits = ['S', 'H', "D", "C"];
@@ -175,8 +176,10 @@
 	};
 
 	var reshuffle = function reshuffle() {
+		console.log("reshuffle deck", deck.length, usedDeck.length);
 		deck.push.apply(deck, usedDeck.splice(0));
 		deck = _lodash2["default"].shuffle(deck);
+		console.log("new deck length", deck.length);
 	};
 
 	var bust = function bust(player) {
@@ -225,6 +228,8 @@
 		if (!buttonActive.hold) {
 			return;
 		}
+		dom.hitB.className += " disabled";
+		dom.holdB.className += " disabled";
 		if (hitOrNot()) {
 			if (hit("p2")) {
 				return;
@@ -240,15 +245,18 @@
 	};
 
 	var victory = function victory(player) {
-		console.log("v = " + player);
+		score[player]++;
 		var v = document.getElementById("victoryMessage");
 		if (player === "p1") {
+			dom.name1.innerHTML = "Player [" + score[player] + "]";
 			v.innerHTML = "You win!";
 		} else if (player === "p2") {
+			dom.name2.innerHTML = "Dealer [" + score[player] + "]";
 			v.innerHTML = "You lose!";
 		} else {
 			v.innerHTML = "Its a draw!";
 		}
+
 		resetButtons();
 	};
 
@@ -258,8 +266,9 @@
 		}
 		resetTable();
 
-		//usedDeck = hands.p1.slice(0);
-		//usedDeck = hands.p2.slice(0);
+		usedDeck.push.apply(usedDeck, hands.p1.slice(0));
+		usedDeck.push.apply(usedDeck, hands.p2.slice(0));
+		console.log(deck.length);
 		if (deck.length < 150) {
 			reshuffle();
 		}
@@ -327,7 +336,6 @@
 		tr.appendChild(td);
 		td.className = "hidden";
 		setTimeout(function () {
-			console.log("test");
 			td.className = "card";
 		}, 700 - 64 * hands[player].length);
 
@@ -369,7 +377,7 @@
 		newDeck.className = "card back deck " + animation;
 		dom.deckParent.appendChild(newDeck);
 		setTimeout(function () {
-			newDeck.className = "hidden";
+			dom.deckParent.removeChild(newDeck);
 		}, 680 - 80 * slot);
 	};
 
@@ -410,6 +418,8 @@
 		dom.victoryMessage = document.getElementById("victoryMessage");
 		dom.score1 = document.getElementById("score1");
 		dom.score2 = document.getElementById("score2");
+		dom.name1 = document.getElementById("name1");
+		dom.name2 = document.getElementById("name2");
 
 		dom.deckParent = document.getElementById("deckParent");
 		dom.deck = document.getElementById("deck");
@@ -12889,7 +12899,7 @@
 
 
 	// module
-	exports.push([module.id, "#playArea {\n  background-color: #36A118;\n  width: 80%;\n  height: 400px;\n  margin-left: 10%;\n  border-radius: 500px;\n  border-color: brown;\n  border-width: 5px;\n  border-style: solid;\n}\n\nh1 {\n  color: royalblue;\n  text-align: center;\n}\n\nh3 {\n  color: black;\n  text-align: center;\n}\n\ntable {\n  border-spacing: 10px;\n  margin-left: 20%;\n}\n\ntr {\n}\n\ntd {\n  width: 64px;\n  height: 89px;\n}\n\n.card {\n  border-radius: 10px;\n  border: 1px solid black;\n  background-color: white;\n}\n\n.back {\n  background: url(" + __webpack_require__(8) + ") center no-repeat;\n  background-size: 90%;\n  background-color: white;\n}\n\n.deck {\n    width: 64px;\n    height: 89px;\n    background-color: red;\n    position:fixed;\n    left:80%;\n    margin-top: 8%;\n    margin-left:-32px; /*half the width*/\n    \n    z-index: 100;\n}\n\n.depthBorder {\n  border-bottom: 6px solid #555;\n  border-right: 6px solid #555;\n}\n\n.topSuit {\n  margin-top: -4px;\n  margin-left: 2px;\n}\n\n.topVal {\n  margin-top: 0px;\n  margin-left: 2px;\n}\n\n.midSuit {\n  font-size: 200%;\n  float: right;\n  margin-right: 21px;\n  margin-top: -10px;\n}\n\n.botSuit {\n  margin-top: 22px;\n  margin-right: 2px;\n}\n.botVal {\n  margin-top: -4px;\n  margin-right: 2px;\n}\n\n.black {\n  color: black;\n}\n\n.red {\n  color: red;\n}\n\n.slideDown {\n    -webkit-animation-name: slideDown;\n    -webkit-animation-duration: 1s;\n    -webkit-animation-timing-function: linear;\n    -webkit-animation-delay: 0s;\n    -webkit-animation-iteration-count: infinite;\n    -webkit-animation-direction: left;\n    /* Standard syntax */\n    animation-name: slideDown;\n    animation-duration: 1s;\n    animation-timing-function: linear;\n    animation-delay: 0s;\n    animation-iteration-count: infinite;\n    animation-direction: left;\n}\n\n.slideUp {\n    -webkit-animation-name: slideUp;\n    -webkit-animation-duration: 1s;\n    -webkit-animation-timing-function: linear;\n    -webkit-animation-delay: 0s;\n    -webkit-animation-iteration-count: infinite;\n    -webkit-animation-direction: left;\n    /* Standard syntax */\n    animation-name: slideUp;\n    animation-duration: 1s;\n    animation-timing-function: linear;\n    animation-delay: 0s;\n    animation-iteration-count: infinite;\n    animation-direction: left;\n}\n\n/* Chrome, Safari, Opera */\n@-webkit-keyframes slideDown {\n    0%   { background-color: red; left:80%; top:20%;}\n    25%  { left:60%; top:32.5%;}\n    50%  { left:40%; top:32.5%;}\n    75%  { left:20%; top:32.5%;}\n    100% { left:10%; top:32.5%;}\n}\n@-webkit-keyframes slideUp {\n    0%   { background-color: red; left:80%; top:20%;}\n    25%  { left:60%; top:8.5%;}\n    50%  { left:40%; top:8.5%;}\n    75%  { left:20%; top:8.5%;}\n    100% { left:10%; top:8.5%;}\n}\n\n\n.flip {\n  -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    transform: rotate(180deg);\n}\n\n.victory {\n  vertical-align: top; \n  text-align: center;\n  font-size: 150%;\n  color: white;\n}\n\n.actionList {\n   margin: auto;\n   width: 40%;\n   margin-top: 20px;\n}\n\n.iblock {\n  display: inline-block;\n}\n\n.score {  \n  font-size: 200%;\n  width: 150px;\n  height: 50px;\n  float: left;\n  color: #FFE42A;\n  text-shadow: 1px 0px 2px black;\n}\n\n#score1 {\n  \n  margin-top: -57%;\n  margin-left: 50%;\n  \n}\n\n#score2 { \n  margin-bottom: -200%;\n  margin-top: 32%;\n  margin-left: 50%;\n}\n.hidden {\n  display: none;\n}\n@media (max-width: 600px) {\n  .deck {\n    margin-top: 30%;\n  }\n}\n/*\n*\n*\n*\n\n\n************** GLOSSY BUTTONS ******************\n\n\n*\n*\n*\n*/\n\n.button {\n  display: inline-block;\n  vertical-align: top;\n  position: relative;\n  overflow: hidden;\n  min-width: 96px;\n  line-height: 46px;\n  padding: 0 24px;\n  font-size: 160%;\n  color: white;\n  text-align: center;\n  text-decoration: none;\n  text-shadow: 0 1px #154c86;\n  background-color: #247edd;\n  background-clip: padding-box;\n  border: 1px solid;\n  border-color: #1c65b2 #18589c #18589c;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);\n  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n}\n\n.button:before {\n  content: '';\n  position: absolute;\n  top: -25%;\n  bottom: -25%;\n  left: -20%;\n  right: -20%;\n  border-radius: 50%;\n  background: transparent;\n  -webkit-box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);\n  box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);\n}\n\n.button:hover { background-color: #1a74d3; }\n\n.button:active {\n  color: rgba(255, 255, 255, 0.9);\n  text-shadow: 0 -1px #154c86;\n  background: #1f71c8;\n  border-color: #113f70 #154c86 #1c65b2;\n  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);\n  background-image: -webkit-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: -moz-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: -o-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: linear-gradient(to bottom, #1a5da5, #3a8be0);\n}\n\n.button:active:before {\n  top: -50%;\n  bottom: -125%;\n  left: -15%;\n  right: -15%;\n  -webkit-box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);\n}\n\n.button-green {\n  text-shadow: 0 1px #0d4d09;\n  background-color: #1ca913;\n  border-color: #147b0e #11640b #11640b;\n}\n\n.button-green:hover { background-color: #159b0d; }\n\n.button-green:active {\n  text-shadow: 0 -1px #0d4d09;\n  background: #189210;\n  border-color: #093606 #0d4d09 #147b0e;\n  background-image: -webkit-linear-gradient(top, #126d0c, #20c016);\n  background-image: -moz-linear-gradient(top, #126d0c, #20c016);\n  background-image: -o-linear-gradient(top, #126d0c, #20c016);\n  background-image: linear-gradient(to bottom, #126d0c, #20c016);\n}\n\n\n.button-red {\n  text-shadow: 0 1px #72100d;\n  background-color: #cd1d18;\n  border-color: #9f1713 #891310 #891310;\n}\n\n.button-red:hover { background-color: #c01511; }\n\n.button-red:active {\n  text-shadow: 0 -1px #72100d;\n  background: #b61a15;\n  border-color: #5b0d0b #72100d #9f1713;\n  background-image: -webkit-linear-gradient(top, #921511, #e4201b);\n}\n\n.disabled,\n.disabled:hover,\n.disabled:active,\n.disabled:before {\n  background-color: rgba(150,150,150,0.5);\n  background-image: -webkit-linear-gradient(top, #lightgray, #darkgray);\n}\n", ""]);
+	exports.push([module.id, "#playArea {\n  background-color: #36A118;\n  width: 80%;\n  height: 400px;\n  margin-left: 10%;\n  border-radius: 500px;\n  border-color: brown;\n  border-width: 5px;\n  border-style: solid;\n}\n\nh1 {\n  color: royalblue;\n  text-align: center;\n}\n\nh3 {\n  position: absolute;\n  color: gold;\n  text-shadow: 1px 2px 3px black;\n  text-align: center;\n  float: left;\n  margin-left: 156px;\n  margin-top: 15px;\n  font-size: 180%;\n\n}\n\n#name1 {\n  padding-top: 310px;\n  \n}\n\ntable {\n  border-spacing: 10px;\n  margin-left: 20%;\n  margin-top: 40px;\n}\n\ntr {\n}\n\ntd {\n  width: 64px;\n  height: 89px;\n}\n\ntd.spacer {\n  height: 60px;\n}\n\n.card {\n  border-radius: 10px;\n  border: 1px solid black;\n  background-color: white;\n}\n\n.back {\n  background: url(" + __webpack_require__(8) + ") center no-repeat;\n  background-size: 90%;\n  background-color: white;\n}\n\n.deck {\n    width: 64px;\n    height: 89px;\n    background-color: red;\n    position:fixed;\n    left:80%;\n    margin-top: 142px;\n    margin-left:-32px; /*half the width*/\n    \n    z-index: 100;\n}\n\n.depthBorder {\n  border-bottom: 6px solid #555;\n  border-right: 6px solid #555;\n}\n\n.topSuit {\n  margin-top: -4px;\n  margin-left: 2px;\n}\n\n.topVal {\n  margin-top: 0px;\n  margin-left: 2px;\n}\n\n.midSuit {\n  font-size: 200%;\n  float: right;\n  margin-right: 21px;\n  margin-top: -10px;\n}\n\n.botSuit {\n  margin-top: 22px;\n  margin-right: 2px;\n}\n.botVal {\n  margin-top: -4px;\n  margin-right: 2px;\n}\n\n.black {\n  color: black;\n}\n\n.red {\n  color: red;\n}\n\n.slideDown {\n    -webkit-animation-name: slideDown;\n    -webkit-animation-duration: 1s;\n    -webkit-animation-timing-function: linear;\n    -webkit-animation-delay: 0s;\n    -webkit-animation-iteration-count: infinite;\n    -webkit-animation-direction: left;\n    /* Standard syntax */\n    animation-name: slideDown;\n    animation-duration: 1s;\n    animation-timing-function: linear;\n    animation-delay: 0s;\n    animation-iteration-count: infinite;\n    animation-direction: left;\n}\n\n.slideUp {\n    -webkit-animation-name: slideUp;\n    -webkit-animation-duration: 1s;\n    -webkit-animation-timing-function: linear;\n    -webkit-animation-delay: 0s;\n    -webkit-animation-iteration-count: infinite;\n    -webkit-animation-direction: left;\n    /* Standard syntax */\n    animation-name: slideUp;\n    animation-duration: 1s;\n    animation-timing-function: linear;\n    animation-delay: 0s;\n    animation-iteration-count: infinite;\n    animation-direction: left;\n}\n\n/* Chrome, Safari, Opera */\n@-webkit-keyframes slideDown {\n    0%   { background-color: red; left:80%; top:100px;}\n    25%  { left:60%; top:180px;}\n    50%  { left:40%; top:180px;}\n    75%  { left:20%; top:180px;}\n    100% { left:10%; top:180px;}\n}\n@-webkit-keyframes slideUp {\n    0%   { background-color: red; left:80%; top:40px;}\n    25%  { left:60%; top:12px;}\n    50%  { left:40%; top:12px;}\n    75%  { left:20%; top:12px;}\n    100% { left:10%; top:12px;}\n}\n\n\n.flip {\n  -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    transform: rotate(180deg);\n}\n\n.victory {\n  position: absolute;\n  vertical-align: top; \n  text-align: center;\n  font-size: 280%;\n  color: white;\n  text-shadow: 1px 1px black;\n  float:left;\n  padding-top: 158px;\n  padding-left: 300px;\n}\n\n.actionList {\n   margin: auto;\n   width: 50%;\n   margin-top: 20px;\n}\n\n.iblock {\n  display: inline-block;\n}\n\n.score {  \n  position: absolute;\n  font-size: 200%;\n  width: 150px;\n  height: 50px;\n  float: left;\n  color: #FFE42A;\n  text-shadow: 1px 0px 2px black;\n  padding-left: 300px;\n  /*margin-left: 500px;*/\n}\n\n#score1 {\n  padding-top: 330px;\n}\n\n#score2 { \n  /*margin-bottom: -200%;*/\n  /*margin-bottom: -200px;*/\n}\n.hidden {\n  display: none;\n}\n/*\n*\n*\n*\n\n\n************** GLOSSY BUTTONS ******************\n\n\n*\n*\n*\n*/\n\n.button {\n  display: inline-block;\n  vertical-align: top;\n  position: relative;\n  overflow: hidden;\n  min-width: 96px;\n  line-height: 46px;\n  padding: 0 24px;\n  font-size: 160%;\n  color: white;\n  text-align: center;\n  text-decoration: none;\n  text-shadow: 0 1px #154c86;\n  background-color: #247edd;\n  background-clip: padding-box;\n  border: 1px solid;\n  border-color: #1c65b2 #18589c #18589c;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);\n  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));\n}\n\n.button:before {\n  content: '';\n  position: absolute;\n  top: -25%;\n  bottom: -25%;\n  left: -20%;\n  right: -20%;\n  border-radius: 50%;\n  background: transparent;\n  -webkit-box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);\n  box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);\n}\n\n.button:hover { background-color: #1a74d3; }\n\n.button:active {\n  color: rgba(255, 255, 255, 0.9);\n  text-shadow: 0 -1px #154c86;\n  background: #1f71c8;\n  border-color: #113f70 #154c86 #1c65b2;\n  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);\n  background-image: -webkit-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: -moz-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: -o-linear-gradient(top, #1a5da5, #3a8be0);\n  background-image: linear-gradient(to bottom, #1a5da5, #3a8be0);\n}\n\n.button:active:before {\n  top: -50%;\n  bottom: -125%;\n  left: -15%;\n  right: -15%;\n  -webkit-box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);\n}\n\n.button-green {\n  text-shadow: 0 1px #0d4d09;\n  background-color: #1ca913;\n  border-color: #147b0e #11640b #11640b;\n}\n\n.button-green:hover { background-color: #159b0d; }\n\n.button-green:active {\n  text-shadow: 0 -1px #0d4d09;\n  background: #189210;\n  border-color: #093606 #0d4d09 #147b0e;\n  background-image: -webkit-linear-gradient(top, #126d0c, #20c016);\n  background-image: -moz-linear-gradient(top, #126d0c, #20c016);\n  background-image: -o-linear-gradient(top, #126d0c, #20c016);\n  background-image: linear-gradient(to bottom, #126d0c, #20c016);\n}\n\n\n.button-red {\n  text-shadow: 0 1px #72100d;\n  background-color: #cd1d18;\n  border-color: #9f1713 #891310 #891310;\n}\n\n.button-red:hover { background-color: #c01511; }\n\n.button-red:active {\n  text-shadow: 0 -1px #72100d;\n  background: #b61a15;\n  border-color: #5b0d0b #72100d #9f1713;\n  background-image: -webkit-linear-gradient(top, #921511, #e4201b);\n}\n\n.disabled,\n.disabled:hover,\n.disabled:active,\n.disabled:before {\n  background-color: rgba(150,150,150,0.5);\n  background-image: -webkit-linear-gradient(top, #lightgray, #darkgray);\n}\n\n\n@media (max-width: 908px) {\n  .actionList {\n     margin: auto;\n     width: 70%;\n     margin-top: 10px;\n  }\n}\n\n@media (max-width: 650px) {\n/*  .deck {\n    margin-top: 30%;\n  }*/\n  table {\n    margin-left: 15%;\n  }\n  .victory {\n    padding-left: 100px\n  }\n  h3 {\n    margin-left: 90px;\n  }\n  .score {\n    padding-left: 225px;\n  }\n  .actionList {\n     margin: auto;\n     width: 80%;\n     margin-top: 10px;\n  }\n  .button {\n    padding: 0 12px;\n  }\n}\n@media (max-width: 475px) {\n  #playArea {\n    margin-left: 4%;\n    width: 90%;\n  }\n  h1 {\n    display: none;\n  }\n  .midSuit{\n    display: none;\n  }\n  table {\n    border-spacing: 0px;\n    margin-top: 56px;\n    margin-left: 0%;\n  }\n  .victory {\n    padding-top: 160px;\n    padding-left: 35px;\n    font-size: 200%;\n  }\n  h3 {\n    margin-left: 100px;\n  }\n  .score {\n    padding-top: 35px;\n    padding-left: 100px;\n  }\n  #score1 {\n    padding-left: 90px;\n    padding-top: 295px\n  }\n  td.spacer {\n    height: 20px;\n  }\n  .actionList {\n     margin: auto;\n     width: 100%;\n     margin-top: 10px;\n  }\n  .button {\n    padding: 0 0px;\n  }\n\n  @-webkit-keyframes slideDown {\n    0%   { background-color: red; left:80%; top:5%;}\n    25%  { left:60%; top:80px;}\n    50%  { left:40%; top:80px;}\n    75%  { left:20%; top:80px;}\n    100% { left:10%; top:80px;}\n}\n@-webkit-keyframes slideUp {\n    0%   { background-color: red; left:80%; top:-20px;}\n    25%  { left:60%; top:-40px;}\n    50%  { left:40%; top:-40px;}\n    75%  { left:20%; top:-40px;}\n    100% { left:10%; top:-40px;}\n}\n}\n", ""]);
 
 	// exports
 
